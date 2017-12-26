@@ -45,7 +45,6 @@ limited_paper_node_count = 100
 
 node_count = 0
 
-
 def add_node_to_dblp_graph(node_id, node_type_value):
     if not dblpGraph.has_node('{}_{}'.format(node_type_value, node_id)):
         dblpGraph.add_node('{}_{}'.format(node_type_value, node_id), node_type=node_type_value)

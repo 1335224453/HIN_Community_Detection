@@ -110,10 +110,10 @@ lda = LatentDirichletAllocation(n_components=n_topics, max_iter=5,
                                 random_state=0).fit(trainTf)
 
 print_phi(lda, tf_feature_names, n_top_words)
-# docTopicDisMatrix = np.matrix(lda.transform(trainTf))
+docTopicDisMatrix = np.matrix(lda.transform(trainTf))
 
 # output theta portion to file
-# export_theta_2_data_file(docTopicDisMatrix, doc_topic_portion_output_file_path)
+export_theta_2_data_file(docTopicDisMatrix, doc_topic_portion_output_file_path)
 
 
 
