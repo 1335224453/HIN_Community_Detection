@@ -28,7 +28,6 @@ def file_to_reverse_dict(file_name):
     f.close()
     return result
 
-
 # params
 author_file_path = 'data/dblp/authors.txt'
 paper_file_path = 'data/dblp/papers.txt'
