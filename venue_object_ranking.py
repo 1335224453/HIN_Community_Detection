@@ -38,7 +38,8 @@ for venue_id in venue_paper_maps:
 
 #sorting
 venue_paper_dict_score = sorted(venue_paper_dict_score.items(),
-                                key=lambda value: value[1], reverse=True)
+                                key=lambda value: value[1], reverse=True)[:10]
 
 for tuple in venue_paper_dict_score:
-    print('{} -> {}'.format(tuple[0], tuple[1] / total_link_count))
+    ranking_score = round(tuple[1] / total_link_count, 8)
+    print('{}\t{}'.format(tuple[0], ranking_score))

@@ -129,6 +129,12 @@ author_dict = file_to_dict(author_file_path)
 paper_author_maps_dict = file_to_reverse_dict(author_paper_file_path)
 author_paper_maps_dict = file_to_dict(author_paper_file_path)
 
+venue_file_path = 'data/dblp/venues.txt'
+paper_venue_maps_file_path = 'data/dblp/paper_venue_maps.txt'
+venue_dict = file_to_dict(venue_file_path)
+paper_venue_maps_dict = file_to_dict(paper_venue_maps_file_path)
+venue_paper_maps_dict = file_to_reverse_dict(paper_venue_maps_file_path)
+
 plt.figure(figsize=(12, 12))
 plt.axis('off')
 #g = nx.read_gexf('data/small_dblp_graph.gexf')
@@ -164,18 +170,18 @@ not_dominated_node_list = []
 drawed_edge_list = []
 
 
-def find_top_10_authors():
+def find_top_venues():
     tmp = {}
-    top_authors = []
-    for author in author_paper_maps_dict:
-        tmp.update({author:len(author_paper_maps_dict[author])})
-    tmp = sorted(tmp.items(),key=lambda value: value[1], reverse=True)[:50]
-    for top_author in tmp:
-        top_authors.append(top_author[0])
-    return top_authors
+    top_venues = []
+    for venue in venue_paper_maps_dict:
+        tmp.update({venue:len(venue_paper_maps_dict[venue])})
+    tmp = sorted(tmp.items(),key=lambda value: value[1], reverse=True)[:100]
+    for top_venue in tmp:
+        top_venues.append(top_venue[0])
+    return top_venues
 
-top_10_authors = find_top_10_authors()
-print(top_10_authors)
+top_venues = find_top_venues()
+print(top_venues)
 
 def get_node_at_index(index):
     for node_index, node_value in enumerate(g.nodes()):
@@ -191,27 +197,49 @@ defined_color.append('#9933ff')
 defined_color.append('#990099')
 defined_color.append('#669900')
 
-added_author_nodes = []
+added_venue_nodes = []
 
 for index, dominated_community_id in enumerate(sorted_partition_list):
     if count <= 3:
         #color = '#{:06x}'.format(random.randint(0, 256 ** 3))
         color = defined_color[index]
+
+        added_venue_at_current_com = []
+
         for index, labelled_value in enumerate(partition.values()):
+
+
+
             if labelled_value == dominated_community_id[0]:
+
                 drawed_node_value = get_node_at_index(index)
                 #print(g.nodes(data=True)[drawed_node_value])
                 current_community_nodes = []
+
                 if g.nodes(data=True)[drawed_node_value]['node_type'] == 'paper':
 
                     paper_id = drawed_node_value.replace('paper_', '')
-                    if paper_id in paper_author_maps_dict:
-                        first_author_id = paper_author_maps_dict[paper_id][0]
-                        if first_author_id in top_10_authors and first_author_id not in added_author_nodes:
-                            added_author_nodes.append(first_author_id)
-                            first_author_name = author_dict[first_author_id][0]
-                            print(first_author_name)
-                            node_labels.update({drawed_node_value:first_author_name})
+
+                    if paper_id in paper_venue_maps_dict:
+                        submit_at_venue_id = paper_venue_maps_dict[paper_id][0]
+                        submit_at_venue_name = venue_dict[submit_at_venue_id][0]
+                        if submit_at_venue_id in top_venues \
+                                and submit_at_venue_id not in added_venue_at_current_com \
+                                and submit_at_venue_id not in added_venue_nodes \
+                                and len(added_venue_at_current_com) < 3:
+                            added_venue_nodes.append(submit_at_venue_id)
+                            added_venue_at_current_com.append(submit_at_venue_id)
+                            node_labels.update({drawed_node_value: submit_at_venue_name})
+                            print(submit_at_venue_name)
+
+
+                    #if paper_id in paper_author_maps_dict:
+                        # first_author_id = paper_author_maps_dict[paper_id][0]
+                        # if first_author_id in top_10_authors and first_author_id not in added_author_nodes:
+                        #     added_author_nodes.append(first_author_id)
+                        #     first_author_name = author_dict[first_author_id][0]
+                        #     print(first_author_name)
+                        #     node_labels.update({drawed_node_value:first_author_name})
                         #print(first_author_name)
 
                     current_community_nodes.append(drawed_node_value)

@@ -1,7 +1,7 @@
 import networkx as nx
 
-dblpGraph = nx.Graph()
 
+dblpGraph = nx.Graph()
 
 def file_to_dict(file_name):
     result = dict()
@@ -49,7 +49,6 @@ def add_node_to_dblp_graph(node_id, node_type_value):
     if not dblpGraph.has_node('{}_{}'.format(node_type_value, node_id)):
         dblpGraph.add_node('{}_{}'.format(node_type_value, node_id), node_type=node_type_value)
 
-
 def create_edge_of_paper_and_venue(paper_id):
     if paper_id in paper_venue_maps_dict:
         venue_id = paper_venue_maps_dict[paper_id][0]
@@ -75,13 +74,13 @@ for index, paper_paper_map in enumerate(paper_paper_maps_dict):
 
                 node_count += 1
                 add_node_to_dblp_graph(source_paper_id, 'paper')
-                # create_edge_of_paper_and_venue(source_paper_id)
+                #create_edge_of_paper_and_venue(source_paper_id)
 
                 for target_paper_id in set_of_citing_paper_ids:
 
                     if target_paper_id in paper_dict.keys():
                         add_node_to_dblp_graph(target_paper_id, 'paper')
-                        # create_edge_of_paper_and_venue(target_paper_id)
+                        #create_edge_of_paper_and_venue(target_paper_id)
                         dblpGraph.add_edge('paper_{}'.format(source_paper_id),
                                            'paper_{}'.format(target_paper_id),
                                            relation_type='refer_to')

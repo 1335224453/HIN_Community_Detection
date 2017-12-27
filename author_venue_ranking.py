@@ -63,6 +63,7 @@ target_venue_list = sorted(target_venue_list.items(),
 for index, author in enumerate(target_venue_list):
     if index < 10:
         author_name = author_dict[author[0]][0]
-        print('{}) {} -> {}'.format(index, author_name, author[1] / total_link_to_target_venue))
+        ranking_score = round(author[1] / total_link_to_target_venue, 8)
+        print('{}\t{}'.format(author_name, ranking_score))
     else:
         break
