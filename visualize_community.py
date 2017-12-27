@@ -163,7 +163,6 @@ drawed_node_list = []
 not_dominated_node_list = []
 drawed_edge_list = []
 
-
 def find_top_10_authors():
     tmp = {}
     top_authors = []

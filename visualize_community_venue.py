@@ -200,7 +200,7 @@ defined_color.append('#669900')
 added_venue_nodes = []
 
 for index, dominated_community_id in enumerate(sorted_partition_list):
-    if count <= 3:
+    if count <= 2:
         #color = '#{:06x}'.format(random.randint(0, 256 ** 3))
         color = defined_color[index]
 
@@ -226,7 +226,7 @@ for index, dominated_community_id in enumerate(sorted_partition_list):
                         if submit_at_venue_id in top_venues \
                                 and submit_at_venue_id not in added_venue_at_current_com \
                                 and submit_at_venue_id not in added_venue_nodes \
-                                and len(added_venue_at_current_com) < 3:
+                                and len(added_venue_at_current_com) < 5:
                             added_venue_nodes.append(submit_at_venue_id)
                             added_venue_at_current_com.append(submit_at_venue_id)
                             node_labels.update({drawed_node_value: submit_at_venue_name})
@@ -273,7 +273,7 @@ nx.draw_networkx_nodes(drawedGraph,
                        pos,
                        nodelist=drawed_node_list,
                        node_color=color_maps,
-                       node_size=200, alpha=0.4)
+                       node_size=800, alpha=0.4)
 
 nx.draw_networkx_labels(drawedGraph,
                         pos,
